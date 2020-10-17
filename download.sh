@@ -18,7 +18,8 @@ while IFS="," read -r name filename url; do
 	if [ -f "data/$dirname.shp" ]; then
 		echo "Skipping conversion"
 	else
-		ogr2ogr -f "ESRI Shapefile" "data/$dirname.shp" "data/$dirname/Land_Registry_Cadastral_Parcels.gml"
+		cp Land_Registry_Cadastral_Parcels.gfs "data/$dirname/Land_Registry_Cadastral_Parcels.gfs"
+		ogr2ogr -append -f SQLite -dialect SQLite -sql "SELECT geometry FROM PREDEFINED" combined.sqlite "data/$dirname/Land_Registry_Cadastral_Parcels.gml"
 	fi
 done < "local authorities.csv"
 
