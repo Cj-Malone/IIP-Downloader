@@ -17,11 +17,12 @@ while IFS="," read -r name filename url; do
 	else
 		unzip "data/$filename" -d "data/$dirname"
 	fi
-	if [ -f "data/$dirname.shp" ]; then
+	if [ -f "data/$dirname.imported" ]; then
 		echo "Skipping conversion"
 	else
 		cp Land_Registry_Cadastral_Parcels.gfs "data/$dirname/Land_Registry_Cadastral_Parcels.gfs"
 		ogr2ogr -append -f SQLite -dialect SQLite -sql "SELECT geometry FROM PREDEFINED" combined.sqlite "data/$dirname/Land_Registry_Cadastral_Parcels.gml"
+		touch "data/$dirname.imported"
 	fi
 done < "local authorities.csv"
 
