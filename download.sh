@@ -20,9 +20,15 @@ while IFS="," read -r name filename url; do
 	if [ -f "data/$dirname.imported" ]; then
 		echo "Skipping conversion"
 	else
-		cp Land_Registry_Cadastral_Parcels.gfs "data/$dirname/Land_Registry_Cadastral_Parcels.gfs"
-		ogr2ogr -append -f SQLite -dialect SQLite -sql "SELECT geometry FROM PREDEFINED" combined.sqlite "data/$dirname/Land_Registry_Cadastral_Parcels.gml"
-		touch "data/$dirname.imported"
+		if [ -f "data/$dirname/INSPIRE Download Licence.pdf" ]; then
+			# England datasets
+			cp Land_Registry_Cadastral_Parcels.gfs "data/$dirname/Land_Registry_Cadastral_Parcels.gfs"
+			ogr2ogr -append -f SQLite -dialect SQLite -sql "SELECT geometry FROM PREDEFINED" combined.sqlite "data/$dirname/Land_Registry_Cadastral_Parcels.gml"
+			touch "data/$dirname.imported"
+		else
+			# Scotland datasets
+			echo "TODO: Skipping Scottish dataset"
+		fi
 	fi
 done < "local authorities.csv"
 
