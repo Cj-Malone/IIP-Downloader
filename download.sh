@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mkdir "data"
+mkdir --parents "data"
 
 while IFS="," read -r name filename url; do
 	dirname="${filename:0:-4}"
