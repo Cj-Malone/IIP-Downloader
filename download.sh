@@ -20,7 +20,7 @@ while IFS="," read -r name filename url; do
 			ogr2ogr -append -f SQLite -dialect SQLite -sql "SELECT geometry FROM ${shortname}_bng" combined.sqlite "/vsizip/data/$filename/${shortname}_bng.shp"
 			touch "data/$shortname.imported"
 		else
-			# England datasets
+			# England & Wales datasets
 			zip -ru "data/$filename" Land_Registry_Cadastral_Parcels.gfs
 			ogr2ogr -append -f SQLite -dialect SQLite -sql "SELECT geometry FROM PREDEFINED" combined.sqlite "/vsizip/data/$filename/Land_Registry_Cadastral_Parcels.gml"
 			touch "data/$shortname.imported"
