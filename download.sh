@@ -2,6 +2,13 @@
 
 mkdir --parents "data"
 
+if [ -f "Land_Registry_Cadastral_Parcels.gfs" ]; then
+	touch "Land_Registry_Cadastral_Parcels.gfs"
+else
+	echo "Land_Registry_Cadastral_Parcels.gfs missing"
+	exit
+fi
+
 while IFS="," read -r name filename url; do
 	shortname="${filename:0:-4}"
 
@@ -11,7 +18,7 @@ while IFS="," read -r name filename url; do
 		echo "Skipping download"
 	else
 		wget "$url" --output-document="data/$filename"
-	fi	
+	fi
 	if [ -f "data/$shortname.imported" ]; then
 		echo "Skipping conversion"
 	else
