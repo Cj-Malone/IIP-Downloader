@@ -14,7 +14,7 @@ while IFS="," read -r name filename url; do
 
 	echo "$name"
 
-	if [ -f "data/$shortname.imported" ]; then
+	if [ -f "data/$shortname.zip" ]; then
 		echo "Skipping download"
 	else
 		wget "$url" --output-document="data/$filename"
